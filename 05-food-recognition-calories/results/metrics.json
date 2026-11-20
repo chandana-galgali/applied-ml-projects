@@ -1,0 +1,242 @@
+{
+  "dataset": {
+    "train": 3000,
+    "validation": 1000,
+    "evaluation": 1000,
+    "image_size": 96,
+    "feature_dims": 4558
+  },
+  "best_params": {
+    "C": 3,
+    "gamma": "scale",
+    "validation_accuracy": 0.9
+  },
+  "models": {
+    "HOG + colour + LBP + RBF SVM (food detector)": {
+      "accuracy": 0.89,
+      "roc_auc": 0.9544,
+      "food_recall": 0.89,
+      "food_precision": 0.89
+    }
+  },
+  "confusion_matrix": [
+    [
+      445,
+      55
+    ],
+    [
+      55,
+      445
+    ]
+  ],
+  "roc": {
+    "fpr": [
+      0.0,
+      0.02,
+      0.04,
+      0.06,
+      0.08,
+      0.1,
+      0.12,
+      0.14,
+      0.16,
+      0.18,
+      0.2,
+      0.22,
+      0.24,
+      0.26,
+      0.28,
+      0.3,
+      0.32,
+      0.34,
+      0.36,
+      0.38,
+      0.4,
+      0.42,
+      0.44,
+      0.46,
+      0.48,
+      0.5,
+      0.52,
+      0.54,
+      0.56,
+      0.58,
+      0.6,
+      0.62,
+      0.64,
+      0.66,
+      0.68,
+      0.7,
+      0.72,
+      0.74,
+      0.76,
+      0.78,
+      0.8,
+      0.82,
+      0.84,
+      0.86,
+      0.88,
+      0.9,
+      0.92,
+      0.94,
+      0.96,
+      0.98,
+      1.0
+    ],
+    "tpr": [
+      0.39,
+      0.686,
+      0.744,
+      0.812,
+      0.854,
+      0.876,
+      0.89,
+      0.906,
+      0.914,
+      0.926,
+      0.934,
+      0.942,
+      0.948,
+      0.948,
+      0.954,
+      0.964,
+      0.964,
+      0.964,
+      0.972,
+      0.976,
+      0.976,
+      0.978,
+      0.978,
+      0.982,
+      0.984,
+      0.984,
+      0.986,
+      0.986,
+      0.99,
+      0.996,
+      0.996,
+      0.998,
+      0.998,
+      0.998,
+      0.998,
+      0.998,
+      0.998,
+      0.998,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ]
+  },
+  "calories": {
+    "table_foods": 541,
+    "food101_coverage": 34,
+    "food101_examples": {
+      "baby_back_ribs": {
+        "query": "baby_back_ribs",
+        "matched": "Baby Back Ribs",
+        "match_score": 1.0,
+        "serving": "1 serving (139 g)",
+        "kcal_per_serving": 360.0,
+        "kcal_per_100g": 259.0
+      },
+      "caesar_salad": {
+        "query": "caesar_salad",
+        "matched": "Chicken Caesar Salad",
+        "match_score": 1.0,
+        "serving": "1 salad (309 g)",
+        "kcal_per_serving": 392.0,
+        "kcal_per_100g": 126.9
+      },
+      "chicken_wings": {
+        "query": "chicken_wings",
+        "matched": "Chicken Wings",
+        "match_score": 1.0,
+        "serving": "1 piece (29 g)",
+        "kcal_per_serving": 94.0,
+        "kcal_per_100g": 324.1
+      },
+      "club_sandwich": {
+        "query": "club_sandwich",
+        "matched": "Subway Club Sandwich",
+        "match_score": 0.788,
+        "serving": "1 sandwich (238 g)",
+        "kcal_per_serving": 312.0,
+        "kcal_per_100g": 131.1
+      },
+      "deviled_eggs": {
+        "query": "deviled_eggs",
+        "matched": "Deviled Eggs",
+        "match_score": 1.0,
+        "serving": "1/2 egg (31 g)",
+        "kcal_per_serving": 62.0,
+        "kcal_per_100g": 200.0
+      },
+      "falafel": {
+        "query": "falafel",
+        "matched": "Falafel",
+        "match_score": 1.0,
+        "serving": "1 patty (17 g)",
+        "kcal_per_serving": 57.0,
+        "kcal_per_100g": 335.3
+      },
+      "fish_and_chips": {
+        "query": "fish_and_chips",
+        "matched": "Fish and Chips",
+        "match_score": 1.0,
+        "serving": "1 serving (300 g)",
+        "kcal_per_serving": 585.0,
+        "kcal_per_100g": 195.0
+      },
+      "french_fries": {
+        "query": "french_fries",
+        "matched": "French Fries",
+        "match_score": 1.0,
+        "serving": "1 serving (71 g)",
+        "kcal_per_serving": 222.0,
+        "kcal_per_100g": 312.7
+      },
+      "french_onion_soup": {
+        "query": "french_onion_soup",
+        "matched": "French Onion Soup",
+        "match_score": 1.0,
+        "serving": "1 cup (243 g)",
+        "kcal_per_serving": 56.0,
+        "kcal_per_100g": 23.0
+      },
+      "fried_rice": {
+        "query": "fried_rice",
+        "matched": "Fried Rice",
+        "match_score": 1.0,
+        "serving": "1 serving (356 g)",
+        "kcal_per_serving": 662.0,
+        "kcal_per_100g": 186.0
+      },
+      "grilled_cheese_sandwich": {
+        "query": "grilled_cheese_sandwich",
+        "matched": "Grilled Cheese Sandwich",
+        "match_score": 1.0,
+        "serving": "1 sandwich (136 g)",
+        "kcal_per_serving": 392.0,
+        "kcal_per_100g": 288.2
+      },
+      "hamburger": {
+        "query": "hamburger",
+        "matched": "Hamburger",
+        "match_score": 1.0,
+        "serving": "1 sandwich (110 g)",
+        "kcal_per_serving": 279.0,
+        "kcal_per_100g": 253.6
+      }
+    }
+  }
+}

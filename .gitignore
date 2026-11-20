@@ -1,0 +1,11 @@
+# datasets are large - download them (see data/README.md)
+data/*
+!data/README.md
+**/.cache/
+**/run.log
+run_all.log
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+*.keras
+*.h5
