@@ -24,7 +24,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC, LinearSVC
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from common.style import PALETTE, plt, results_dir, save_json  # noqa: E402
+from common.style import PALETTE, plt, results_dir, save, save_json  # noqa: E402
 
 SEED = 42
 SIZE = 64
@@ -121,14 +121,14 @@ def main():
         ax.text(j, i, v, ha="center", va="center", color="white" if v > cm.max() / 2 else "black", fontsize=13)
     ax.set(xticks=[0, 1], yticks=[0, 1], xticklabels=["cat", "dog"], yticklabels=["cat", "dog"],
            xlabel="Predicted", ylabel="Actual", title=f"Confusion matrix (acc {acc:.1%})")
-    fig.savefig(out / "confusion_matrix.png"); plt.close(fig)
+    save(fig, out / "confusion_matrix.png"); plt.close(fig)
 
     fpr, tpr, _ = roc_curve(y[idx_te], scores)
     fig, ax = plt.subplots(figsize=(4.5, 4))
     ax.plot(fpr, tpr, color=PALETTE[0], lw=2, label=f"RBF SVM (AUC {auc:.3f})")
     ax.plot([0, 1], [0, 1], "--", color="#94a3b8")
     ax.set(xlabel="False positive rate", ylabel="True positive rate", title="ROC curve"); ax.legend()
-    fig.savefig(out / "roc_curve.png"); plt.close(fig)
+    save(fig, out / "roc_curve.png"); plt.close(fig)
 
     # gallery of held-out predictions
     pick = rng.choice(len(idx_te), 12, replace=False)
@@ -139,7 +139,7 @@ def main():
         ok = p[k] == y[i]
         ax.imshow(img); ax.axis("off")
         ax.set_title(f"pred: {'dog' if p[k] else 'cat'}", color=PALETTE[5] if ok else PALETTE[7], fontsize=10)
-    fig.suptitle("Held-out predictions (green = correct, red = wrong)"); fig.savefig(out / "sample_predictions.png"); plt.close(fig)
+    fig.suptitle("Held-out predictions (green = correct, red = wrong)"); save(fig, out / "sample_predictions.png"); plt.close(fig)
 
     fpr_s = np.interp(np.linspace(0, 1, 51), fpr, tpr)
     save_json({

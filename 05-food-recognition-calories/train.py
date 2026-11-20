@@ -31,7 +31,7 @@ from sklearn.svm import SVC
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from calories import load_table, lookup  # noqa: E402
-from common.style import PALETTE, plt, results_dir, save_json  # noqa: E402
+from common.style import PALETTE, plt, results_dir, save, save_json  # noqa: E402
 from food101_classes import FOOD101  # noqa: E402
 
 SEED = 42
@@ -108,7 +108,7 @@ def main():
         ax.text(j, i, v, ha="center", va="center", color="white" if v > cm.max() / 2 else "black", fontsize=13)
     ax.set(xticks=[0, 1], yticks=[0, 1], xticklabels=["non-food", "food"], yticklabels=["non-food", "food"],
            xlabel="Predicted", ylabel="Actual", title=f"Food detector (acc {acc:.1%})")
-    fig.savefig(out / "confusion_matrix.png"); plt.close(fig)
+    save(fig, out / "confusion_matrix.png"); plt.close(fig)
 
     fpr, tpr, _ = roc_curve(yte, s)
     rng = np.random.default_rng(SEED)
@@ -119,14 +119,14 @@ def main():
         ax.set_title("food" if p[k] else "non-food", fontsize=10,
                      color=PALETTE[5] if p[k] == yte[k] else PALETTE[7])
     fig.suptitle("Evaluation-set predictions (green = correct, red = wrong)")
-    fig.savefig(out / "sample_predictions.png"); plt.close(fig)
+    save(fig, out / "sample_predictions.png"); plt.close(fig)
 
     top = table.dropna(subset=["kcal_per_100g"]).sort_values("kcal_per_100g", ascending=False)
     fig, ax = plt.subplots(figsize=(7, 4))
     ax.hist(top["kcal_per_100g"].clip(upper=900), bins=40, color=PALETTE[1])
     ax.set(title=f"Calorie density of {len(top)} foods in the lookup table",
            xlabel="kcal per 100 g", ylabel="Foods")
-    fig.savefig(out / "calorie_distribution.png"); plt.close(fig)
+    save(fig, out / "calorie_distribution.png"); plt.close(fig)
 
     save_json({
         "dataset": {"train": int(len(ytr)), "validation": int(len(yva)), "evaluation": int(len(yte)),

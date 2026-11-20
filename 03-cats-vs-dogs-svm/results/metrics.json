@@ -10,7 +10,7 @@
     "svm__C": 10,
     "svm__gamma": 0.001
   },
-  "fit_seconds": 164.0,
+  "fit_seconds": 164.1,
   "models": {
     "Raw pixels + PCA + Linear SVM": {
       "accuracy": 0.5702

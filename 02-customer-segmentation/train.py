@@ -18,7 +18,7 @@ from sklearn.metrics import calinski_harabasz_score, davies_bouldin_score, silho
 from sklearn.preprocessing import StandardScaler
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from common.style import PALETTE, plt, results_dir, save_json  # noqa: E402
+from common.style import PALETTE, plt, results_dir, save, save_json  # noqa: E402
 
 SEED = 42
 FEATURES = ["Annual Income (k$)", "Spending Score (1-100)"]
@@ -84,7 +84,7 @@ def main():
     ax2.set_ylabel("Silhouette score")
     ax1.axvline(best_k, color="#334155", ls=":", lw=1)
     ax1.set_title(f"Elbow + silhouette both point to k = {best_k}")
-    fig.legend(loc="upper right", bbox_to_anchor=(0.88, 0.88)); fig.savefig(out / "elbow_silhouette.png"); plt.close(fig)
+    fig.legend(loc="upper right", bbox_to_anchor=(0.88, 0.88)); save(fig, out / "elbow_silhouette.png"); plt.close(fig)
 
     scaler = StandardScaler().fit(df[FEATURES])
     centers = scaler.inverse_transform(km.cluster_centers_)
@@ -96,7 +96,7 @@ def main():
     ax.scatter(centers[:, 0], centers[:, 1], marker="X", s=180, color="#0f172a", label="Centroids")
     ax.set(xlabel=FEATURES[0], ylabel=FEATURES[1], title="Customer segments (K-Means)")
     ax.legend(fontsize=8, loc="upper left", bbox_to_anchor=(1, 1))
-    fig.savefig(out / "segments.png"); plt.close(fig)
+    save(fig, out / "segments.png"); plt.close(fig)
 
     save_json({
         "dataset": {"rows": int(len(df)), "features_used": FEATURES},

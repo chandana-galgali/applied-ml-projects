@@ -29,7 +29,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from common.style import PALETTE, plt, results_dir, save_json  # noqa: E402
+from common.style import PALETTE, plt, results_dir, save, save_json  # noqa: E402
 
 SEED = 42
 W, H = 64, 64
@@ -154,14 +154,14 @@ def main():
            xlabel="Predicted", ylabel="Actual",
            title=f"Leave-people-out confusion matrix (%), acc {lpo_acc:.1%}")
     plt.setp(ax.get_xticklabels(), rotation=45, ha="right")
-    fig.savefig(out / "confusion_matrix.png"); plt.close(fig)
+    save(fig, out / "confusion_matrix.png"); plt.close(fig)
 
     fig, axes = plt.subplots(2, 5, figsize=(12, 2.6))
     for g, ax in enumerate(axes.ravel()):
         i = np.where((y == g) & (groups == 3))[0][100]
         ax.imshow(cv2.imread(paths[i], cv2.IMREAD_GRAYSCALE), cmap="gray"); ax.axis("off")
         ax.set_title(f"{GESTURES[g]}  ({rep[GESTURES[g]]['f1-score']*100:.0f}% F1)", fontsize=9)
-    fig.suptitle("The 10 gestures, with per-class F1 on unseen people"); fig.savefig(out / "gestures.png"); plt.close(fig)
+    fig.suptitle("The 10 gestures, with per-class F1 on unseen people"); save(fig, out / "gestures.png"); plt.close(fig)
 
     save_json({
         "dataset": {"images": int(len(y)), "subjects": int(len(set(groups))), "classes": GESTURES,

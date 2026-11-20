@@ -64,10 +64,13 @@ section.proj{background:var(--surface);border:1px solid var(--border);border-rad
 details{margin-top:18px;border-top:1px solid var(--border);padding-top:12px}
 summary{cursor:pointer;font-weight:600;font-size:14px}
 details ul{color:var(--text-2);padding-left:20px;margin:10px 0}
-.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-top:12px}
-.gallery figure{margin:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#fff}
-.gallery img{width:100%;display:block}
-.gallery figcaption{font-size:12px;color:var(--text-2);padding:8px 10px;background:var(--surface);border-top:1px solid var(--border)}
+.gallery{display:grid;grid-template-columns:1fr;gap:14px;margin-top:12px}
+.gallery figure{margin:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--surface);display:flex;flex-direction:column}
+.gallery figcaption{padding:10px 14px;border-bottom:1px solid var(--border)}
+.gallery figcaption b{display:block;font-size:13.5px;font-weight:600;color:var(--text)}
+.gallery figcaption span{display:block;font-size:12px;color:var(--muted);margin-top:1px}
+.gallery .frame{background:#fff;display:flex;align-items:center;justify-content:center;padding:16px}
+.gallery .frame img{max-width:100%;max-height:400px;width:auto;height:auto;display:block}
 .callout{border-left:3px solid var(--s4);background:color-mix(in srgb,var(--s4) 9%,transparent);padding:10px 14px;border-radius:0 8px 8px 0;font-size:13.5px;color:var(--text-2);margin:0 0 18px}
 #tip{position:fixed;pointer-events:none;z-index:50;background:var(--text);color:var(--surface);font-size:12px;line-height:1.45;padding:7px 10px;border-radius:7px;opacity:0;transition:opacity .08s;max-width:240px}
 .cal{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
@@ -250,7 +253,7 @@ const P = [
           "Train and test were label-encoded separately, so the same category could get different numbers in each. Replaced with one scikit-learn pipeline fitted on training data only.",
           "Replaced the invented \"accuracy %\" with standard regression metrics (R², MAE, RMSE, RMSE on log price) under 5-fold cross-validation.",
           "Log-transformed the right-skewed target and removed the 2 documented outlier sales."],
-  figs: [["predicted_vs_actual.png", "Cross-validated predictions"], ["residuals.png", "Residual distribution"]],
+  figs: [["predicted_vs_actual.png", "Predicted vs actual price", "All 1,458 houses, 5-fold cross-validated"], ["residuals.png", "Residuals of the Ridge model", "Actual minus predicted price, in $k"]],
 },
 {
   id: "02-customer-segmentation", title: "Customer Segmentation", tag: "K-Means Clustering",
@@ -287,7 +290,7 @@ const P = [
           "Clustered directly on the two behavioural features instead of a PCA projection that mixed gender and age into the axes, so segments are interpretable.",
           "Each cluster gets a business label and a profile table (size, income, spending, age, gender mix).",
           "Fixed a wrong output filename in the print message; plots are saved to files instead of blocking plt.show()."],
-  figs: [["segments.png", "Segments with centroids"], ["elbow_silhouette.png", "Elbow and silhouette"]],
+  figs: [["segments.png", "Customer segments", "K-Means with k = 5; ✕ marks each centroid"], ["elbow_silhouette.png", "Choosing the number of clusters", "Inertia (elbow) and silhouette score for k = 2–10"]],
 },
 {
   id: "03-cats-vs-dogs-svm", title: "Cats vs Dogs Classifier", tag: "Support Vector Machine",
@@ -312,7 +315,7 @@ const P = [
           "Tuned C and gamma for an RBF kernel with 3-fold grid search on a training subset, then retrained on the full 20,000-image training split.",
           "Stratified 80/20 split; reports a confusion matrix, per-class precision/recall and ROC AUC.",
           "The original computed test predictions and then discarded them. They are now written to test_predictions.csv, and feature extraction runs in parallel and is cached."],
-  figs: [["sample_predictions.png", "Held-out predictions"], ["confusion_matrix.png", "Confusion matrix"]],
+  figs: [["sample_predictions.png", "Predictions on held-out images", "Green label = correct, red = wrong"], ["confusion_matrix.png", "Confusion matrix", "5,000 held-out images"]],
 },
 {
   id: "04-hand-gesture-recognition", title: "Hand Gesture Recognition", tag: "Computer Vision · SVM + CNN",
@@ -341,7 +344,7 @@ const P = [
           "Splits by person (GroupKFold), so test subjects are never seen in training. A random split gives a misleading 100%.",
           "Added an Otsu-threshold hand crop that removes position and scale differences, raising unseen-person accuracy from 69% to 83%.",
           "Saved model plus predict_webcam.py for a live demo. gesture_cnn_gpu.ipynb has the corrected Keras CNN for Kaggle/Colab GPUs."],
-  figs: [["gestures.png", "The 10 gestures and per-class F1"], ["confusion_matrix.png", "Confusion matrix (% of each gesture)"]],
+  figs: [["gestures.png", "The 10 gestures", "Per-gesture F1 score on unseen people"], ["confusion_matrix.png", "Confusion matrix", "% of each gesture, leave-people-out"]],
 },
 {
   id: "05-food-recognition-calories", title: "Food Recognition & Calorie Estimation", tag: "Computer Vision · Nutrition",
@@ -376,7 +379,7 @@ const P = [
           "The calorie step mapped the model's class index onto unrelated rows of the calorie CSV. Calories are now parsed from text (\"272 cal\"), normalised per 100 g, and matched by dish name with strict matching plus hand-checked overrides, so a wrong match returns nothing rather than a wrong number.",
           "Stage 1 runs on any CPU: HOG + colour + LBP texture features with an RBF SVM, tuned on the official validation split and reported once on the evaluation split.",
           "Stage 2 (food101_cnn_gpu.ipynb): EfficientNetB0 transfer learning on Food-101, wired to the calorie lookup to return the top-3 dishes with calories."],
-  figs: [["sample_predictions.png", "Food detector on unseen images"], ["calorie_distribution.png", "Calorie density across the lookup table"]],
+  figs: [["sample_predictions.png", "Food detector on unseen images", "Green label = correct, red = wrong"], ["calorie_distribution.png", "Calorie density of the lookup table", "kcal per 100 g, foods with a known serving weight"]],
 },
 ];
 
@@ -396,7 +399,7 @@ P.forEach((p, i) => {
     <div class="stats">${p.stats(d).map(([b, t]) => `<div class="stat"><b>${b}</b><small>${t}</small></div>`).join("")}</div>`;
   root.appendChild(s);
   p.charts(s, d);
-  s.insertAdjacentHTML("beforeend", `<details><summary>Figures</summary><div class="gallery">${p.figs.map(([f, c]) => `<figure><img loading="lazy" src="img/${p.id}/${f}" alt="${c}"><figcaption>${c}</figcaption></figure>`).join("")}</div></details>
+  s.insertAdjacentHTML("beforeend", `<details><summary>Figures</summary><div class="gallery">${p.figs.map(([f, c, sub]) => `<figure><figcaption><b>${c}</b><span>${sub || "&nbsp;"}</span></figcaption><a class="frame" href="img/${p.id}/${f}" target="_blank" rel="noopener"><img loading="lazy" src="img/${p.id}/${f}" alt="${c}"></a></figure>`).join("")}</div></details>
     <details><summary>What was fixed and improved</summary><ul>${p.fixes.map(f => `<li>${f}</li>`).join("")}</ul></details>`);
 });
 </script>

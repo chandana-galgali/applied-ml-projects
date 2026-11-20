@@ -22,7 +22,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from common.style import PALETTE, plt, results_dir, save_json  # noqa: E402
+from common.style import PALETTE, plt, results_dir, save, save_json  # noqa: E402
 
 SEED = 42
 
@@ -118,20 +118,20 @@ def main():
         ax.scatter(yt / 1e3, yp / 1e3, s=8, alpha=0.45, color=color)
         lim = [0, max(yt.max(), yp.max()) / 1e3]
         ax.plot(lim, lim, "--", color="#334155", lw=1)
-        ax.set(title=f"{name}\nR² = {results[name]['R2']:.3f}",
+        ax.set(title=f"{name.split(' (')[0]}, {name.split('(')[1].rstrip(')')} · R² {results[name]['R2']:.3f}",
                xlabel="Actual price ($k)", ylabel="Predicted price ($k)")
-    fig.savefig(out / "predicted_vs_actual.png"); plt.close(fig)
+    save(fig, out / "predicted_vs_actual.png"); plt.close(fig)
 
     fig, ax = plt.subplots(figsize=(6, 3.2))
     ax.barh(list(coef_pct), list(coef_pct.values()), color=PALETTE[0])
     ax.set(title="Linear model: price change per +1 std of feature", xlabel="% change in price")
-    fig.savefig(out / "coefficients.png"); plt.close(fig)
+    save(fig, out / "coefficients.png"); plt.close(fig)
 
     fig, ax = plt.subplots(figsize=(6, 3.5))
     res = yt - np.expm1(preds[best_lin])
     ax.hist(res / 1e3, bins=60, color=PALETTE[2])
     ax.set(title="Ridge residuals (cross-validated)", xlabel="Actual − predicted ($k)", ylabel="Houses")
-    fig.savefig(out / "residuals.png"); plt.close(fig)
+    save(fig, out / "residuals.png"); plt.close(fig)
 
     # small sample for the website scatter plot
     rng = np.random.default_rng(SEED)
