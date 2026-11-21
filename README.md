@@ -44,7 +44,3 @@ Or run one project at a time: `cd 02-customer-segmentation && python train.py`.
 - **Honest splits:** gestures are evaluated on people the model never saw. A random split scores 100% there and is reported only for contrast.
 - **Baselines included:** each project shows the simple approach next to the improved one, so the gain is visible.
 - **Reproducible:** fixed seeds; `bash run_all.sh` regenerates every number and figure.
-
-## Publishing the site
-
-GitHub → Settings → Pages → *Deploy from a branch* → `main` / `docs`.
