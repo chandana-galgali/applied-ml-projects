@@ -23,7 +23,7 @@ Gestures: palm, L, fist, fist moved, thumb, index, OK, palm moved, C, down
 
 ## Files
 - `train.py`: CPU pipeline above; saves `results/gesture_svm.joblib`
-- `predict_webcam.py`: live webcam or single-image prediction with the saved model
+- `predict_webcam.py`: single-image or webcam prediction with the saved model (experimental: trained on infrared frames, so ordinary webcam footage will be less accurate)
 - `gesture_cnn_gpu.ipynb`: Keras CNN with the same leave-people-out split, ready for Kaggle/Colab GPU
 
 ## Run

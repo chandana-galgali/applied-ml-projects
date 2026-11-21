@@ -320,7 +320,7 @@ const P = [
 {
   id: "04-hand-gesture-recognition", title: "Hand Gesture Recognition", tag: "Computer Vision · SVM + CNN",
   dataset: ["Kaggle · LeapGestRecog (20,000 near-infrared images)", "https://www.kaggle.com/datasets/gti-upm/leapgestrecog"],
-  lede: "Recognises 10 hand gestures (palm, fist, thumb, OK, …) from near-infrared images, with a live webcam demo. Evaluated on people the model has never seen, the honest test for a gesture-control interface.",
+  lede: "Recognises 10 hand gestures (palm, fist, thumb, OK, …) from near-infrared images. Evaluated on people the model has never seen, the honest test for a gesture-control interface.",
   stack: ["OpenCV", "Otsu thresholding", "HOG", "RBF SVM", "GroupKFold", "TensorFlow/Keras CNN (GPU notebook)"],
   headline: d => [pct(d.models["Hand crop, HOG + PCA + RBF SVM"].leave_people_out_accuracy), "accuracy on unseen people"],
   stats: d => {
@@ -343,7 +343,7 @@ const P = [
   fixes: ["The original notebook could not run: it looked for train/, validation/ and test/ folders the dataset doesn't have. The split is now built from the real subject/gesture/frame layout.",
           "Splits by person (GroupKFold), so test subjects are never seen in training. A random split gives a misleading 100%.",
           "Added an Otsu-threshold hand crop that removes position and scale differences, raising unseen-person accuracy from 69% to 83%.",
-          "Saved model plus predict_webcam.py for a live demo. gesture_cnn_gpu.ipynb has the corrected Keras CNN for Kaggle/Colab GPUs."],
+          "Saved the trained model, plus predict_webcam.py for trying it on your own images or webcam (untested on live webcams: the model was trained on infrared Leap Motion frames). gesture_cnn_gpu.ipynb has the corrected Keras CNN for Kaggle/Colab GPUs."],
   figs: [["gestures.png", "The 10 gestures", "Per-gesture F1 score on unseen people"], ["confusion_matrix.png", "Confusion matrix", "% of each gesture, leave-people-out"]],
 },
 {
